@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/asf/!svn/ver/1483134/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2
+END
+InsertExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1457567/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/InsertExecutorTest.java
+END
+QueryExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1457567/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/QueryExecutorTest.java
+END
+BatchInsertExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1482108/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/BatchInsertExecutorTest.java
+END
+QueryLoaderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/QueryLoaderTest.java
+END
+AsyncExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1457560/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/AsyncExecutorTest.java
+END
+QueryRunnerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1457560/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/QueryRunnerTest.java
+END
+BatchExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1457567/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/BatchExecutorTest.java
+END
+UpdateExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1457567/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/UpdateExecutorTest.java
+END
+MockResultSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/MockResultSet.java
+END
+ResultSetIteratorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/ResultSetIteratorTest.java
+END
+TestBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/TestBean.java
+END
+BeanProcessorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/BeanProcessorTest.java
+END
+MockResultSetMetaData.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/MockResultSetMetaData.java
+END
+DbUtilsTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1483134/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/DbUtilsTest.java
+END
+BaseTestCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/BaseTestCase.java
+END
+ProxyFactoryTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/ProxyFactoryTest.java
+END
+BasicRowProcessorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/BasicRowProcessorTest.java
+END
+GenerousBeanProcessorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1457567/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/GenerousBeanProcessorTest.java
+END
+BaseResultSetHandlerTestCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/BaseResultSetHandlerTestCase.java
+END
+AbstractExecutorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1457567/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/AbstractExecutorTest.java
+END

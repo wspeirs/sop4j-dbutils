@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1482409/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers
+END
+BeanListHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/BeanListHandlerTest.java
+END
+KeyedHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/KeyedHandlerTest.java
+END
+BeanMapHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/BeanMapHandlerTest.java
+END
+BeanHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/BeanHandlerTest.java
+END
+ScalarHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/ScalarHandlerTest.java
+END
+ColumnListHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/ColumnListHandlerTest.java
+END
+MapListHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/MapListHandlerTest.java
+END
+ArrayListHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/ArrayListHandlerTest.java
+END
+MapHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1454860/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/MapHandlerTest.java
+END
+ArrayHandlerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1482409/commons/proper/dbutils/branches/2_0/src/test/java/org/apache/commons/dbutils2/handlers/ArrayHandlerTest.java
+END

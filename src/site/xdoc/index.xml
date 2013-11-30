@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+ <properties>
+  <title>JDBC Utility Component</title>
+ </properties>
+
+<body>
+
+<section name="Commons DbUtils: JDBC Utility Component">
+
+<p>
+The Commons DbUtils library is a small set of classes designed to make working with 
+<a href="http://java.sun.com/products/jdbc/">JDBC</a> easier.  JDBC 
+resource cleanup code is mundane, error prone work so these classes 
+abstract out all of the cleanup tasks from your code leaving you with
+what you really wanted to do with JDBC in the first place: query and 
+update data.
+</p>
+
+<p>Some of the advantages of using DbUtils are:</p>
+<ul>
+    <li>
+        No possibility for resource leaks.  Correct JDBC coding isn't 
+        difficult but it is time-consuming and tedious.  This often 
+        leads to connection leaks that may be difficult to track down.
+    </li>
+    <li>
+        Cleaner, clearer persistence code.  The amount of code needed 
+        to persist data in a database is drastically reduced. The remaining 
+        code clearly expresses your intention without being cluttered 
+        with resource cleanup.
+    </li>
+    <li>
+        Automatically populate JavaBean properties from ResultSets.  You
+        don't need to manually copy column values into bean instances
+        by calling setter methods.  Each row of the ResultSet can be
+        represented by one fully populated bean instance.
+    </li>
+</ul>
+
+</section>
+
+
+<section name="Scope of the Package">
+<p>
+DbUtils is designed to be:
+</p>
+<ul>
+    <li>
+        <strong>Small</strong> - you should be able to understand the 
+        whole package in a short amount of time.
+    </li>
+    <li>
+        <strong>Transparent</strong> - DbUtils doesn't do any magic 
+        behind the scenes.  You give it a query, it executes it and 
+        cleans up for you.
+    </li>
+    <li>
+        <strong>Fast</strong> - You don't need to create a million 
+        temporary objects to work with DbUtils.
+    </li>
+</ul>
+
+<p>
+DbUtils is <strong>not</strong>:
+</p>
+<ul>
+    <li>
+        An Object/Relational bridge - there are plenty of good O/R tools
+        already.  DbUtils is for developers looking to use JDBC without all
+        the mundane pieces.  
+    </li>
+    <li>
+        A Data Access Object (DAO) framework - DbUtils can be used to build
+        a DAO framework though.
+    </li>
+    <li>
+        An object oriented abstraction of general database
+        objects like a Table, Column, or PrimaryKey.
+    </li>
+    <li>
+        A heavyweight framework of any kind - the goal here is to be a 
+        straightforward and easy to use JDBC helper library.
+    </li>
+</ul>
+
+</section>
+
+<section name="Example Usage">
+<p>
+Please see <a href="examples.html">Examples Page</a>.
+</p>
+</section>
+
+<section name="Dependencies">
+    <p>
+    DbUtils is intentionally a single jar distribution and relies only on 
+    a standard Java 1.6 or later JRE.
+    </p> 
+</section>
+
+</body>
+</document>
+
