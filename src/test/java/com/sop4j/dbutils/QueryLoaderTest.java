@@ -23,8 +23,7 @@ import java.util.Map;
  */
 public class QueryLoaderTest extends BaseTestCase {
 
-    private static final String QUERIES =
-        "/org/apache/commons/dbutils/TestQueries.properties";
+    private static final String QUERIES = "/TestQueries.properties";
 
     public void testLoad() throws IOException {
         try {
