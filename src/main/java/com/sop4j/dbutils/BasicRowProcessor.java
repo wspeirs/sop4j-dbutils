@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,7 +55,7 @@ public class BasicRowProcessor implements RowProcessor {
 
     /**
      * BasicRowProcessor constructor.
-     * 
+     *
      * @param convert The BeanProcessor to use when converting columns to bean properties.
      * @since 1.1
      */
@@ -92,7 +91,7 @@ public class BasicRowProcessor implements RowProcessor {
     /**
      * Convert a <code>ResultSet</code> row into a JavaBean.  This
      * implementation delegates to a BeanProcessor instance.
-     * 
+     *
      * @see com.sop4j.dbutils.RowProcessor#toBean(java.sql.ResultSet, java.lang.Class)
      * @see com.sop4j.dbutils.BeanProcessor#toBean(java.sql.ResultSet, java.lang.Class)
      * @param <T> The type of bean to create
@@ -109,7 +108,7 @@ public class BasicRowProcessor implements RowProcessor {
     /**
      * Convert a <code>ResultSet</code> into a <code>List</code> of JavaBeans.
      * This implementation delegates to a BeanProcessor instance.
-     * 
+     *
      * @see com.sop4j.dbutils.RowProcessor#toBeanList(java.sql.ResultSet, java.lang.Class)
      * @see com.sop4j.dbutils.BeanProcessor#toBeanList(java.sql.ResultSet, java.lang.Class)
      * @param <T> The type of bean to create
@@ -129,7 +128,7 @@ public class BasicRowProcessor implements RowProcessor {
      * implementation returns a <code>Map</code> with case insensitive column
      * names as keys.  Calls to <code>map.get("COL")</code> and
      * <code>map.get("col")</code> return the same value.
-     * 
+     *
      * @see com.sop4j.dbutils.RowProcessor#toMap(java.sql.ResultSet)
      * @param rs ResultSet that supplies the map data
      * @throws SQLException if a database access error occurs
@@ -146,7 +145,7 @@ public class BasicRowProcessor implements RowProcessor {
             if (null == columnName || 0 == columnName.length()) {
                 columnName = rsmd.getColumnName(i);
             }
-            result.put(columnName, rs.getObject(i));		
+            result.put(columnName, rs.getObject(i));
         }
 
         return result;

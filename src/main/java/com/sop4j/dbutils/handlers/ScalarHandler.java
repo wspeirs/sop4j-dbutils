@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -71,7 +70,7 @@ public class ScalarHandler<T> implements ResultSetHandler<T> {
 
     /**
      * Helper constructor
-     * 
+     *
      * @param columnIndex The index of the column to retrieve from the
      * <code>ResultSet</code>.
      * @param columnName The name of the column to retrieve from the
@@ -86,7 +85,7 @@ public class ScalarHandler<T> implements ResultSetHandler<T> {
      * Returns one <code>ResultSet</code> column as an object via the
      * <code>ResultSet.getObject()</code> method that performs type
      * conversions.
-     * 
+     *
      * @param rs <code>ResultSet</code> to process.
      * @return The column or <code>null</code> if there are no rows in
      * the <code>ResultSet</code>.

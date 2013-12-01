@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -49,7 +48,7 @@ public interface RowProcessor {
      * row.  The <code>ResultSet</code> should be positioned on a valid row before
      * passing it to this method.  Implementations of this method must not
      * alter the row position of the <code>ResultSet</code>.
-     * 
+     *
      * @param <T> The type of bean to create
      * @param rs ResultSet that supplies the bean data
      * @param type Class from which to create the bean instance
@@ -62,7 +61,7 @@ public interface RowProcessor {
      * Create a <code>List</code> of JavaBeans from the column values in all
      * <code>ResultSet</code> rows.  <code>ResultSet.next()</code> should
      * <strong>not</strong> be called before passing it to this method.
-     * 
+     *
      * @param <T> The type of bean to create
      * @param rs ResultSet that supplies the bean data
      * @param type Class from which to create the bean instance

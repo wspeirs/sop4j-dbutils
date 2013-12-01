@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,7 +45,7 @@ public class ResultSetIterator implements Iterator<Object[]> {
 
     /**
      * Constructor for ResultSetIterator.
-     * 
+     *
      * @param rs Wrap this <code>ResultSet</code> in an <code>Iterator</code>.
      */
     public ResultSetIterator(ResultSet rs) {
@@ -55,7 +54,7 @@ public class ResultSetIterator implements Iterator<Object[]> {
 
     /**
      * Constructor for ResultSetIterator.
-     * 
+     *
      * @param rs Wrap this <code>ResultSet</code> in an <code>Iterator</code>.
      * @param convert The processor to use when converting a row into an
      * <code>Object[]</code>.  Defaults to a
@@ -68,7 +67,7 @@ public class ResultSetIterator implements Iterator<Object[]> {
 
     /**
      * Returns true if there are more rows in the ResultSet.
-     * 
+     *
      * @return boolean <code>true</code> if there are more rows
      * @throws RuntimeException if an SQLException occurs.
      */
@@ -84,7 +83,7 @@ public class ResultSetIterator implements Iterator<Object[]> {
 
     /**
      * Returns the next row as an <code>Object[]</code>.
-     * 
+     *
      * @return An <code>Object[]</code> with the same number of elements as
      * columns in the <code>ResultSet</code>.
      * @see java.util.Iterator#next()
@@ -103,7 +102,7 @@ public class ResultSetIterator implements Iterator<Object[]> {
 
     /**
      * Deletes the current row from the <code>ResultSet</code>.
-     * 
+     *
      * @see java.util.Iterator#remove()
      * @throws RuntimeException if an SQLException occurs.
      */
@@ -119,7 +118,7 @@ public class ResultSetIterator implements Iterator<Object[]> {
     /**
      * Rethrow the SQLException as a RuntimeException.  This implementation
      * creates a new RuntimeException with the SQLException's error message.
-     * 
+     *
      * @param e SQLException to rethrow
      * @since 1.1
      */

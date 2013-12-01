@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,7 +32,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
 
     /**
      * Constructs a BatchExecutor given a connection and SQL statement.
-     * 
+     *
      * @param conn The connection to use during execution.
      * @param sql The SQL statement.
      * @param closeConnection If the connection should be closed or not.
@@ -43,7 +42,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
         super(conn, sql);
         this.closeConn = closeConnection;
     }
-    
+
     /**
      * Returns the close connection flag.
      * @return close connection flag.
@@ -54,7 +53,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
 
     /**
      * Binds a parameter name to a value for a given statement.
-     * 
+     *
      * @param name the name of the parameter.
      * @param value the value to bind to the parameter.
      * @return this object.
@@ -70,7 +69,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
      * Binds null to a parameter.
      * Types.VARCHAR is used as the type's parameter.
      * This usually works, but fails with some Oracle and MS SQL drivers.
-     * 
+     *
      * @param name the name of the parameter.
      * @return this execution object to provide the fluent style.
      * @throws SQLException throw if the parameter is not found, already bound, or there is an issue binding null.
@@ -82,7 +81,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
 
     /**
      * Binds null to a parameter, specifying the parameter's type.
-     * 
+     *
      * @param name the name of the parameter.
      * @param sqlType the type of the parameter.
      * @return this execution object to provide the fluent style.
@@ -95,7 +94,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
 
     /**
      * Adds the statement to the batch after binding all of the parameters.
-     * 
+     *
      * @return this object.
      * @throws SQLException if a SQLException is thrown during the addBatch() call.
      * @see java.sql.PreparedStatement#addBatch()
@@ -113,7 +112,7 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
 
     /**
      * Calls batch after checking the parameters to ensure nothing is null.
-     * 
+     *
      * @return an array containing the number of rows updated for each statement.
      * @throws SQLException If there are database or parameter errors.
      * @see com.sop4j.dbutils.UpdateExecutor#execute()

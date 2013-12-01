@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -129,7 +128,7 @@ public class BeanProcessor {
      * <code>null</code> when SQL NULL is returned.  This is the same behavior
      * as the <code>ResultSet</code> get* methods.
      * </p>
-     * 
+     *
      * @param <T> The type of bean to create
      * @param rs ResultSet that supplies the bean data
      * @param type Class from which to create the bean instance
@@ -173,7 +172,7 @@ public class BeanProcessor {
      * <code>null</code> when SQL NULL is returned.  This is the same behavior
      * as the <code>ResultSet</code> get* methods.
      * </p>
-     * 
+     *
      * @param <T> The type of bean to create
      * @param rs ResultSet that supplies the bean data
      * @param type Class from which to create the bean instance
@@ -200,7 +199,7 @@ public class BeanProcessor {
 
     /**
      * Creates a new object and initializes its fields from the ResultSet.
-     * 
+     *
      * @param <T> The type of bean to create
      * @param rs The result set.
      * @param type The bean type (the return type of the object).
@@ -239,7 +238,7 @@ public class BeanProcessor {
     /**
      * Calls the setter method on the target object for the given property.
      * If no setter method exists for the property, this method does nothing.
-     * 
+     *
      * @param target The object to set the property on.
      * @param prop The property to set.
      * @param value The value to pass into the setter.
@@ -344,7 +343,7 @@ public class BeanProcessor {
      * is called at the start of the bean creation process and may be
      * overridden to provide custom behavior like returning a cached bean
      * instance.
-     * 
+     *
      * @param <T> The type of object to create
      * @param c The Class to create an object from.
      * @return A newly created object of the Class.

@@ -1,12 +1,11 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Copyright (C) 2013 SOP4J
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -109,7 +108,7 @@ public class KeyedHandler<K> extends AbstractKeyedHandler<K, Map<String, Object>
 
     /**
      * Private Helper
-     * 
+     *
      * @param convert The <code>RowProcessor</code> implementation
      * to use when converting rows into Maps
      * @param columnIndex The values to use as keys in the Map are
@@ -129,7 +128,7 @@ public class KeyedHandler<K> extends AbstractKeyedHandler<K, Map<String, Object>
      * key value from the current <code>ResultSet</code> row.  This
      * implementation returns <code>ResultSet.getObject()</code> for the
      * configured key column name or index.
-     * 
+     *
      * @param rs ResultSet to create a key from
      * @return Object from the configured key column name/index
      *
@@ -152,7 +151,7 @@ public class KeyedHandler<K> extends AbstractKeyedHandler<K, Map<String, Object>
      * implementation returns a <code>Map</code> with case insensitive column
      * names as keys.  Calls to <code>map.get("COL")</code> and
      * <code>map.get("col")</code> return the same value.
-     * 
+     *
      * @param rs ResultSet to create a row from
      * @return Object typed Map containing column names to values
      * @throws SQLException if a database access error occurs
