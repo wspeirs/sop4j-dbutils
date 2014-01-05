@@ -18,20 +18,71 @@ limitations under the License.
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sop4j</groupId>
   <artifactId>dbutils</artifactId>
-  <version>2.0</version>
+  <version>2.0-SNAPSHOT</version>
   <name>SOP4J DbUtils</name>
+  <packaging>jar</packaging>
   <inceptionYear>2013</inceptionYear>
   <description>A fork of Apache Commons-DbUtils.</description>
   <url>http://www.sop4j.com/</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
   <scm>
-    <connection>git@github.com:wspeirs/sop4j-dbutils.git</connection>
-    <url>git@github.com:wspeirs/sop4j-dbutils.git</url>
-    <developerConnection>git@github.com:wspeirs/sop4j-dbutils.git</developerConnection>
+    <connection>scm:git:git://github.com/wspeirs/sop4j-dbutils.git</connection>
+    <developerConnection>scm:git:git@github.com:wspeirs/sop4j-dbutils.git</developerConnection>
+    <url>https://github.com/wspeirs/sop4j-dbutils</url>
   </scm>
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/wspeirs/sop4j-dbutils/issues</url>
   </issueManagement>
+  <developers>
+    <developer>
+      <name>Juozas Baliuka</name>
+      <id>baliuka</id>
+      <email>baliuka@apache.org</email>
+    </developer>
+    <developer>
+      <name>Steven Caswell</name>
+      <id>scaswell</id>
+      <email>steven@caswell.name</email>
+    </developer>
+    <developer>
+      <name>Dan Fabulich</name>
+      <id>dfabulich</id>
+      <email>dan@fabulich.com</email>
+    </developer>
+    <developer>
+      <name>David Graham</name>
+      <id>dgraham</id>
+      <email>dgraham@apache.org</email>
+    </developer>
+    <developer>
+      <name>Yoav Shapira</name>
+      <id>yoavs</id>
+      <email>yoavs@apache.org</email>
+    </developer>
+    <developer>
+      <name>William Speirs</name>
+      <id>wspeirs</id>
+      <email>wspeirs@apache.org</email>
+    </developer>
+    <developer>
+      <name>Simone Tripodi</name>
+      <id>simonetripodi</id>
+      <email>simonetripodi@apache.org</email>
+    </developer>
+    <developer>
+      <name>Henri Yandell</name>
+      <id>bayard</id>
+      <email>bayard@apache.org</email>
+    </developer>
+  </developers>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -52,6 +103,18 @@ limitations under the License.
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus snapshot repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Sonatype Nexus release repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
   <properties>
     <maven.compile.source>1.6</maven.compile.source>
     <maven.compile.target>1.6</maven.compile.target>
@@ -63,6 +126,9 @@ limitations under the License.
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.4.2</version>
+        <configuration>
+          <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -169,4 +235,36 @@ limitations under the License.
       </plugin>
     </plugins>
   </reporting>
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      <activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.4</version>
+            <configuration>
+              <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
