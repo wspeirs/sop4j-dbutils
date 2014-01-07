@@ -243,7 +243,7 @@ limitations under the License.
           <name>performRelease</name>
           <value>true</value>
         </property>
-      <activation>
+    </activation>
       <build>
         <plugins>
           <plugin>
