@@ -117,8 +117,8 @@ limitations under the License.
     </repository>
   </distributionManagement>
   <properties>
-    <maven.compile.source>1.6</maven.compile.source>
-    <maven.compile.target>1.6</maven.compile.target>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <build>
@@ -244,7 +244,7 @@ limitations under the License.
           <name>performRelease</name>
           <value>true</value>
         </property>
-    </activation>
+      </activation>
       <build>
         <plugins>
           <plugin>
