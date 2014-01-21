@@ -63,7 +63,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
         // replace all of the :names with ?, and create a prepared statement
         stmt = conn.prepareStatement(sql.replaceAll(":\\w+", "\\?"));
     }
-
+    
     /**
      * Helper method to insert params and the current position into the map.
      * @param param the SQL param.
@@ -114,21 +114,27 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
      * @throws SQLException if there are unmapped params.
      */
     void throwIfUnmappedParams() throws SQLException {
-        if (paramPosMap.size() != 0) {
-            final Set<String> unmappedParams = paramPosMap.keySet();
-            final StringBuilder sb = new StringBuilder("There are unbound parameters: ");
-
-            for (String param:unmappedParams) {
-                sb.append(param);
-                sb.append(", ");
-            }
-
-            // remove the last comma
-            sb.delete(sb.length() - 2, sb.length());
-
-            // throw our exception
-            throw new SQLException(sb.toString());
+        // if the sizes are the same, then we've filled all the parameters
+        if(paramValueMap.size() == paramPosMap.size()) {
+            return;
         }
+
+        final StringBuilder sb = new StringBuilder("There are unbound parameters: ");
+        final Set<String> unboundParams = paramPosMap.keySet();
+        
+        // compute the set difference
+        unboundParams.removeAll(paramValueMap.keySet());
+
+        for (String param:unboundParams) {
+            sb.append(param);
+            sb.append(", ");
+        }
+
+        // remove the last comma
+        sb.delete(sb.length() - 2, sb.length());
+
+        // throw our exception
+        throw new SQLException(sb.toString());
     }
 
     /**
@@ -139,8 +145,33 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
      * @return this execution object to provide the fluent style.
      * @throws SQLException thrown if the parameter is not found, already bound, or there is an issue binding it.
      */
-    public T bind(final String name, final Object value) throws SQLException {
-        return bind(name, value, true);
+    public T bind(String name, final Object value) throws SQLException {
+        name = name.replace(COLON, ""); // so we can take ":name" or "name"
+
+        final List<Integer> pos = paramPosMap.get(name);
+
+        if (pos == null) {
+            throw new SQLException(name + " is not found in the SQL statement");
+        }
+        
+        // make sure it isn't already bound
+        if(paramValueMap.containsKey(name)) {
+            throw new SQLException("You are attempting to bind the parameter " + name + " twice. It already has the value " + paramValueMap.get(name));
+        }
+
+        // go through and bind all of the positions for this name
+        for (Integer p:pos) {
+            stmt.setObject(p.intValue(), value);
+        }
+
+        // add the param and value to our map
+        paramValueMap.put(name, value);
+
+        // suppressed because the casting will always work here
+        @SuppressWarnings("unchecked")
+        final T ret = (T) this;
+
+        return ret;
     }
 
     /**
@@ -153,7 +184,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
      * @throws SQLException throw if the parameter is not found, already bound, or there is an issue binding null.
      */
     public T bindNull(final String name) throws SQLException {
-        return bindNull(name, Types.VARCHAR, true);
+        return bindNull(name, Types.VARCHAR);
     }
 
     /**
@@ -164,23 +195,10 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
      * @return this execution object to provide the fluent style.
      * @throws SQLException throw if the parameter is not found, already bound, or there is an issue binding null.
      */
-    public T bindNull(final String name, final int sqlType) throws SQLException {
-        return bindNull(name, sqlType, true);
-    }
-
-    /**
-     * Given a param name and sqlType, binds a null to that parameter.
-     *
-     * @param name the name of the parameter.
-     * @param sqlType the type of the parameter.
-     * @param removeFromPosMap if the param should be removed from the pos map.
-     * @return this
-     * @throws SQLException if there is an SQLException during binding.
-     */
-    T bindNull(String name, int sqlType, boolean removeFromPosMap) throws SQLException {
+    public T bindNull(String name, final int sqlType) throws SQLException {
         name = name.replace(COLON, ""); // so we can take ":name" or "name"
 
-        final List<Integer> pos = removeFromPosMap ? paramPosMap.remove(name) : paramPosMap.get(name);
+        final List<Integer> pos = paramPosMap.get(name);
 
         if (pos == null) {
             throw new SQLException(name + " is not found in the SQL statement");
@@ -193,40 +211,6 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
 
         // add the param and value to our map
         paramValueMap.put(name, null);
-
-        // suppressed because the casting will always work here
-        @SuppressWarnings("unchecked")
-        final T ret = (T) this;
-
-        return ret;
-    }
-
-    /**
-     * Binds value to name, but does not do the bookkeeping.
-     *
-     * @param name the parameter name.
-     * @param value the value.
-     * @param removeFromPosMap if the param should be removed from the pos map.
-     * @return this
-     * @throws SQLException if there is an SQLException during binding.
-     */
-    T bind(String name, final Object value, boolean removeFromPosMap) throws SQLException {
-        name = name.replace(COLON, ""); // so we can take ":name" or "name"
-
-        final List<Integer> pos = removeFromPosMap ? paramPosMap.remove(name) : paramPosMap.get(name);
-
-        if (pos == null) {
-            throw new SQLException(name + " is not found in the SQL statement");
-        }
-
-        // go through and bind all of the positions for this name
-        for (Integer p:pos) {
-            // TODO: need to figure out how to bind NULL
-            stmt.setObject(p.intValue(), value);
-        }
-
-        // add the param and value to our map
-        paramValueMap.put(name, value);
 
         // suppressed because the casting will always work here
         @SuppressWarnings("unchecked")

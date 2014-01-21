@@ -17,7 +17,6 @@ package com.sop4j.dbutils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Types;
 
 /**
  * This class provides the ability to execute a batch of statements.
@@ -29,6 +28,7 @@ import java.sql.Types;
 public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
 
     private final boolean closeConn;
+    private boolean addBatchCalled = false;
 
     /**
      * Constructs a BatchExecutor given a connection and SQL statement.
@@ -52,47 +52,6 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
     }
 
     /**
-     * Binds a parameter name to a value for a given statement.
-     *
-     * @param name the name of the parameter.
-     * @param value the value to bind to the parameter.
-     * @return this object.
-     * @throws SQLException thrown if the statement number does not exist, or any other SQLException.
-     * @see com.sop4j.dbutils.UpdateExecutor#bind(String, Object)
-     */
-    @Override
-    public BatchExecutor bind(final String name, final Object value) throws SQLException {
-        return bind(name, value, false);
-    }
-
-    /**
-     * Binds null to a parameter.
-     * Types.VARCHAR is used as the type's parameter.
-     * This usually works, but fails with some Oracle and MS SQL drivers.
-     *
-     * @param name the name of the parameter.
-     * @return this execution object to provide the fluent style.
-     * @throws SQLException throw if the parameter is not found, already bound, or there is an issue binding null.
-     */
-    @Override
-    public BatchExecutor bindNull(final String name) throws SQLException {
-        return bindNull(name, Types.VARCHAR, false);
-    }
-
-    /**
-     * Binds null to a parameter, specifying the parameter's type.
-     *
-     * @param name the name of the parameter.
-     * @param sqlType the type of the parameter.
-     * @return this execution object to provide the fluent style.
-     * @throws SQLException throw if the parameter is not found, already bound, or there is an issue binding null.
-     */
-    @Override
-    public BatchExecutor bindNull(final String name, final int sqlType) throws SQLException {
-        return bindNull(name, sqlType, false);
-    }
-
-    /**
      * Adds the statement to the batch after binding all of the parameters.
      *
      * @return this object.
@@ -100,6 +59,11 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
      * @see java.sql.PreparedStatement#addBatch()
      */
     public BatchExecutor addBatch() throws SQLException {
+        // throw an exception if there are unmapped parameters
+        this.throwIfUnmappedParams();
+
+        addBatchCalled = true;
+        
         try {
             getStatement().addBatch();
             clearValueMap();
@@ -118,8 +82,9 @@ public class BatchExecutor extends AbstractExecutor<BatchExecutor> {
      * @see com.sop4j.dbutils.UpdateExecutor#execute()
      */
     public int[] execute() throws SQLException {
-        // throw an exception if there are unmapped parameters
-        this.throwIfUnmappedParams();
+        if(!addBatchCalled) {
+            throw new SQLException("addBatch must be called before execute.");
+        }
 
         try {
             return getStatement().executeBatch();

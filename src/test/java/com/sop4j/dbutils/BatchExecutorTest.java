@@ -52,9 +52,56 @@ public class BatchExecutorTest {
 
     @Test
     public void testGoodSQL() throws Exception {
-        createExecutor("insert into blah");
+        createExecutor("insert into blah where a = :a and b = :b");
 
+        executor.bind("a", "a").bind("b", "b").addBatch();
+        int[] ret = executor.execute();
+
+        assertEquals(3, ret.length);
+        assertEquals(2, ret[0]);
+        assertEquals(3, ret[1]);
+        assertEquals(4, ret[2]);
+        verify(conn, times(1)).close();
+        verify(stmt, times(1)).close();
+    }
+
+    @Test(expected=SQLException.class)
+    public void testNoBinds() throws Exception {
+        createExecutor("insert into blah where a = :a and b = :b");
+
+        // no bindings done
         executor.addBatch();
+        int[] ret = executor.execute();
+
+        assertEquals(3, ret.length);
+        assertEquals(2, ret[0]);
+        assertEquals(3, ret[1]);
+        assertEquals(4, ret[2]);
+        verify(conn, times(1)).close();
+        verify(stmt, times(1)).close();
+    }
+
+    @Test(expected=SQLException.class)
+    public void testNoAddBatch() throws Exception {
+        createExecutor("insert into blah where a = :a and b = :b");
+
+        // never called addBatch
+        int[] ret = executor.execute();
+
+        assertEquals(3, ret.length);
+        assertEquals(2, ret[0]);
+        assertEquals(3, ret[1]);
+        assertEquals(4, ret[2]);
+        verify(conn, times(1)).close();
+        verify(stmt, times(1)).close();
+    }
+
+    @Test(expected=SQLException.class)
+    public void testNotAllBound() throws Exception {
+        createExecutor("insert into blah where a = :a and b = :b");
+
+        // bind only a
+        executor.bind("a", "a").addBatch();
         int[] ret = executor.execute();
 
         assertEquals(3, ret.length);
