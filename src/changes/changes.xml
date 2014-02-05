@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
- Copyright (C) 2013 SOP4J
+ Copyright (C) 2014 SOP4J
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -42,8 +42,9 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Release Notes</title>
   </properties>
   <body>
-    <release version="2.0" date="2013-??-??" description="A fork of Apache commons-dbutils">
+    <release version="2.1" date="2014-02-05" description="Fixes to the BatchExecutor">
     </release>
-    
+    <release version="2.0" date="2014-01-07" description="A fork of Apache commons-dbutils">
+    </release>
   </body>
 </document>
