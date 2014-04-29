@@ -312,4 +312,18 @@ public class QueryRunner {
 
         return new InsertExecutor(conn, sql, closeConn);
     }
+
+    //
+    // Entity methods
+    //
+
+    /**
+     * Reads an entity.
+     * @param entity the entity marked with the {@link Entity} annotation.
+     * @return an {@link ReadEntityExecutor} used to read entities.
+     * @throws SQLException If there are database or parameter errors.
+     */
+    public <T> ReadEntityExecutor<T> read(final Class<T> entity) throws SQLException {
+        return new ReadEntityExecutor<T>(entity, this.prepareConnection());
+    }
 }

@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
 
     private static final String COLON = ":";  // TODO: change this to any character
+    private static final Pattern PARAM_PATTERN = Pattern.compile("(:\\w+)");
 
     private final Connection conn;
     private final String sql;
@@ -52,8 +53,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
         this.paramPosMap = new HashMap<String, List<Integer>>();
         this.paramValueMap = new HashMap<String, Object>();
 
-        final Pattern paramPattern = Pattern.compile("(:\\w+)");
-        final Matcher matcher = paramPattern.matcher(sql);
+        final Matcher matcher = PARAM_PATTERN.matcher(sql);
 
         // go through finding params
         while (matcher.find()) {
@@ -63,7 +63,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
         // replace all of the :names with ?, and create a prepared statement
         stmt = conn.prepareStatement(sql.replaceAll(":\\w+", "\\?"));
     }
-    
+
     /**
      * Helper method to insert params and the current position into the map.
      * @param param the SQL param.
@@ -121,7 +121,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
 
         final StringBuilder sb = new StringBuilder("There are unbound parameters: ");
         final Set<String> unboundParams = paramPosMap.keySet();
-        
+
         // compute the set difference
         unboundParams.removeAll(paramValueMap.keySet());
 
@@ -153,7 +153,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
         if (pos == null) {
             throw new SQLException(name + " is not found in the SQL statement");
         }
-        
+
         // make sure it isn't already bound
         if(paramValueMap.containsKey(name)) {
             throw new SQLException("You are attempting to bind the parameter " + name + " twice. It already has the value " + paramValueMap.get(name));
