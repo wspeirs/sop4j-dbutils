@@ -15,10 +15,14 @@
  */
 package com.sop4j.dbutils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.sql.DataSource;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * Executes SQL queries with pluggable strategies for handling
@@ -318,12 +322,77 @@ public class QueryRunner {
     //
 
     /**
-     * Reads an entity.
-     * @param entity the entity marked with the {@link Entity} annotation.
-     * @return an {@link ReadEntityExecutor} used to read entities.
+     * Creates a new entity in the database by calling insert.
+     * @param entity the entity to insert.
+     * @throws SQLException if there is a problem inserting the entity.
+     */
+    public <T> void create(final T entity) throws SQLException {
+        final String tableName = EntityUtils.getTableName(entity.getClass());
+        final Map<String, String> columns = EntityUtils.getColumnNames(entity.getClass());
+
+        final StringBuilder sb = new StringBuilder("insert into ");
+
+        // create the SQL command
+        sb.append(tableName);
+        sb.append(" (");
+        sb.append(EntityUtils.joinColumnsWithComma(columns.keySet(), null));
+        sb.append(") values(");
+        sb.append(EntityUtils.joinColumnsWithComma(columns.keySet(), ":"));
+        sb.append(")");
+
+        // create the executor
+        final InsertExecutor exec = new InsertExecutor(this.prepareConnection(), sb.toString(), true);
+
+        for(String column:columns.keySet()) {
+            try {
+                // bind all of the values
+                final Object value = PropertyUtils.getSimpleProperty(entity, columns.get(column));
+
+                if(value == null) {
+                    exec.bindNull(column);
+                } else {
+                    exec.bind(column, value);
+                }
+            } catch (final IllegalAccessException e) {
+                throw new SQLException(e);
+            } catch (final InvocationTargetException e) {
+                throw new SQLException(e);
+            } catch (final NoSuchMethodException e) {
+                throw new SQLException(e);
+            }
+        }
+
+        // execute the insert
+        exec.execute();
+    }
+
+    /**
+     * Constructs an entity ReadEntityExecutor used to read entities.
+     * @param entity an entity marked with the {@link Entity} annotation.
+     * @return a {@link ReadEntityExecutor} used to read entities.
      * @throws SQLException If there are database or parameter errors.
      */
     public <T> ReadEntityExecutor<T> read(final Class<T> entity) throws SQLException {
         return new ReadEntityExecutor<T>(entity, this.prepareConnection());
+    }
+
+    /**
+     * Constructs an {@link UpdateEntityExecutor} used to update entities.
+     * @param entity an entity marked with the {@link Entity} annotation.
+     * @return a {@link UpdateEntityExecutor} used to update entities.
+     * @throws SQLException If there are database or parameter errors.
+     */
+    public <T> UpdateEntityExecutor<T> update(final T entity) throws SQLException {
+        return new UpdateEntityExecutor<T>(entity, this.prepareConnection());
+    }
+
+    /**
+     * Constructs an {@link DeleteEntityExecutor} used to delete entities.
+     * @param entity an entity marked with the {@link Entity} annotation.
+     * @return a {@link DeleteEntityExecutor} used to delete entities.
+     * @throws SQLException If there are database or parameter errors.
+     */
+    public <T> DeleteEntityExecutor<T> delete(final Class<T> entity) throws SQLException {
+        return new DeleteEntityExecutor<T>(entity, this.prepareConnection());
     }
 }

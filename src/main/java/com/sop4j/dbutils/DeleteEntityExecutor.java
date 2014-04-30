@@ -7,12 +7,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
-import com.sop4j.dbutils.handlers.BeanHandler;
-
 /**
  * An EntityExecutor that is used to read entities.
  */
-public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
+public class DeleteEntityExecutor<T> extends AbstractEntityExecutor<T> {
 
     /**
      * Constructor.
@@ -20,7 +18,7 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
      * @param entity the entity to read.
      * @param conn the connection to use.
      */
-    ReadEntityExecutor(final Class<T> entity, final Connection conn) {
+    DeleteEntityExecutor(final Class<T> entity, final Connection conn) {
         super(entity, conn);
     }
 
@@ -29,8 +27,8 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
      * @return the entity read from the database.
      * @throws SQLException thrown if any errors occur during reading.
      */
-    public T read() throws SQLException {
-        final StringBuilder sb = new StringBuilder("select * from ");
+    public int delete() throws SQLException {
+        final StringBuilder sb = new StringBuilder("delete from ");
 
         sb.append(tableName);
 
@@ -38,10 +36,12 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
             sb.append(" where ");
 
             sb.append(EntityUtils.joinColumnsEquals(params.keySet(), " and "));
+        } else {
+            throw new IllegalArgumentException("No parameters were bound, so this would delete the whole table.");
         }
 
         // setup the QueryExecutor
-        final QueryExecutor exec = new QueryExecutor(conn, sb.toString(), true);
+        final UpdateExecutor exec = new UpdateExecutor(conn, sb.toString(), true);
 
         // go through and bind all the params
         for(Map.Entry<String, Object> entity:params.entrySet()) {
@@ -49,6 +49,6 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
         }
 
         // execute using the BeanHandler
-        return exec.execute(new BeanHandler<T>(entity));
+        return exec.execute();
     }
 }
