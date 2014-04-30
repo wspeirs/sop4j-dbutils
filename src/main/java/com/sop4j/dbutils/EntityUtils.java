@@ -97,6 +97,10 @@ public class EntityUtils {
 
         final Iterator<String> it = columns.iterator();
 
+        if(prefix != null) {
+            sb.append(prefix);
+        }
+
         sb.append(it.next());
 
         while(it.hasNext()) {
