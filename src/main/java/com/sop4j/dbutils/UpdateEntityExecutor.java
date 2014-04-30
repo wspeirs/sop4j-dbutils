@@ -37,8 +37,8 @@ public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntity
      * @return the number of rows updated.
      * @throws SQLException thrown if any errors occur during updating.
      */
-    public int update() throws SQLException {
-        final Map<String, String> columns = EntityUtils.getColumnNames(entity.getClass());
+    public int update(final Class<? extends T> entityClass) throws SQLException {
+        final Map<String, String> columns = EntityUtils.getColumnNames(entityClass);
 
         final StringBuilder sb = new StringBuilder("update ");
 

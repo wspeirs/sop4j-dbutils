@@ -330,9 +330,9 @@ public class QueryRunner {
      * @param entity the entity to insert.
      * @throws SQLException if there is a problem inserting the entity.
      */
-    public <T> void create(final T entity) throws SQLException {
+    public <T> void create(final Class<? extends T> entityClass, final T entity) throws SQLException {
         final String tableName = EntityUtils.getTableName(entity.getClass());
-        final Map<String, String> columns = EntityUtils.getColumnNames(entity.getClass());
+        final Map<String, String> columns = EntityUtils.getColumnNames(entityClass);
 
         final StringBuilder sb = new StringBuilder("insert into ");
 

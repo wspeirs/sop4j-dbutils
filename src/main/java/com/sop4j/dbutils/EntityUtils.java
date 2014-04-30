@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
 
 
 public class EntityUtils {
@@ -22,18 +23,20 @@ public class EntityUtils {
      * @param entity the entity to lookup.
      * @return the name of the table for the entity.
      */
-    static String getTableName(final Class<?> entity) {
+    public static String getTableName(final Class<?> entity) {
         final Entity annotation = entity.getAnnotation(Entity.class);
 
         if(annotation == null) {
             throw new IllegalArgumentException(entity.getName() + " does not have the Entity annotation");
         }
 
+        final Table table = entity.getAnnotation(Table.class);
+
         // get the table's name from the annotation
-        if(annotation.name().length() == 0) {
-            return entity.getName();
+        if(table != null && !table.name().isEmpty()) {
+            return table.name();
         } else {
-            return annotation.name();
+            return entity.getSimpleName();
         }
     }
 
@@ -42,14 +45,14 @@ public class EntityUtils {
      * @param entity the entity to search.
      * @return a map which contains column name, and field name.
      */
-    static Map<String, String> getColumnNames(final Class<?> entity) {
+    static <T> Map<String, String> getColumnNames(final Class<? extends T> entityClass) {
         final Map<String, String> ret = new HashMap<String, String>();
 
-        if(entity.getAnnotation(Entity.class) == null) {
-            throw new IllegalArgumentException(entity.getName() + " does not have the Entity annotation");
+        if(entityClass.getAnnotation(Entity.class) == null) {
+            throw new IllegalArgumentException(entityClass.getName() + " does not have the Entity annotation");
         }
 
-        for(Field field:entity.getDeclaredFields()) {
+        for(Field field:entityClass.getDeclaredFields()) {
             final Column column = field.getAnnotation(Column.class);
             final GeneratedValue gen = field.getAnnotation(GeneratedValue.class);
 

@@ -34,13 +34,8 @@ abstract class AbstractEntityExecutor<T extends AbstractEntityExecutor<T>> {
             throw new IllegalArgumentException(entity.getName() + " does not have the Entity annotation");
         }
 
-        // get the table's name from the annotation
-        if(annotation.name().length() == 0) {
-            tableName = entity.getName();
-        } else {
-            tableName = annotation.name();
-        }
-
+        // get the table's name
+        tableName = EntityUtils.getTableName(entity);
     }
 
     /**
