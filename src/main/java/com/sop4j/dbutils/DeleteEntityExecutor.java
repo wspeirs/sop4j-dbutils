@@ -7,10 +7,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An EntityExecutor that is used to read entities.
  */
 public class DeleteEntityExecutor<T> extends AbstractEntityExecutor<DeleteEntityExecutor<T>> {
+    private static final Logger LOG = LoggerFactory.getLogger(DeleteEntityExecutor.class);
 
     /**
      * Constructor.
@@ -39,6 +43,8 @@ public class DeleteEntityExecutor<T> extends AbstractEntityExecutor<DeleteEntity
         } else {
             throw new IllegalArgumentException("No parameters were bound, so this would delete the whole table.");
         }
+
+        LOG.debug("DELETE: {}", sb.toString());
 
         // setup the QueryExecutor
         final UpdateExecutor exec = new UpdateExecutor(conn, sb.toString(), true);

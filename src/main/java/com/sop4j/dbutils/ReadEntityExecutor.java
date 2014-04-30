@@ -7,12 +7,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sop4j.dbutils.handlers.BeanHandler;
 
 /**
  * An EntityExecutor that is used to read entities.
  */
 public class ReadEntityExecutor<T> extends AbstractEntityExecutor<ReadEntityExecutor<T>> {
+    private static final Logger LOG = LoggerFactory.getLogger(ReadEntityExecutor.class);
 
     /**
      * Constructor.
@@ -39,6 +43,8 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<ReadEntityExec
 
             sb.append(EntityUtils.joinColumnsEquals(params.keySet(), " and "));
         }
+
+        LOG.debug("SELECT: {}", sb.toString());
 
         // setup the QueryExecutor
         final QueryExecutor exec = new QueryExecutor(conn, sb.toString(), true);

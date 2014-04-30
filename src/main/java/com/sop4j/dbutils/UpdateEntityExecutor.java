@@ -9,11 +9,14 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An EntityExecutor that is used to update entities.
  */
 public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntityExecutor<T>> {
+    private static final Logger LOG = LoggerFactory.getLogger(UpdateEntityExecutor.class);
 
     private final T entityInstance;
 
@@ -49,6 +52,8 @@ public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntity
 
             sb.append(EntityUtils.joinColumnsEquals(params.keySet(), " and "));
         }
+
+        LOG.debug("UPDATE: {}", sb.toString());
 
         // setup the QueryExecutor
         final UpdateExecutor exec = new UpdateExecutor(conn, sb.toString(), true);

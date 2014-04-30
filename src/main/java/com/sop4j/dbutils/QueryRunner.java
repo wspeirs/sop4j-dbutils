@@ -23,6 +23,8 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Executes SQL queries with pluggable strategies for handling
@@ -31,6 +33,8 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @see ResultSetHandler
  */
 public class QueryRunner {
+    private static final Logger LOG = LoggerFactory.getLogger(QueryRunner.class);
+
     /**
      * The DataSource to retrieve connections from.
      */
@@ -339,6 +343,8 @@ public class QueryRunner {
         sb.append(") values(");
         sb.append(EntityUtils.joinColumnsWithComma(columns.keySet(), ":"));
         sb.append(")");
+
+        LOG.debug("INSERT: {}", sb.toString());
 
         // create the executor
         final InsertExecutor exec = new InsertExecutor(this.prepareConnection(), sb.toString(), true);
