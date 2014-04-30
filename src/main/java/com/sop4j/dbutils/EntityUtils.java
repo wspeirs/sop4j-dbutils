@@ -22,7 +22,7 @@ public class EntityUtils {
      * @param entity the entity to lookup.
      * @return the name of the table for the entity.
      */
-    public static String getTableName(final Class<?> entity) {
+    static String getTableName(final Class<?> entity) {
         final Entity annotation = entity.getAnnotation(Entity.class);
 
         if(annotation == null) {
@@ -42,7 +42,7 @@ public class EntityUtils {
      * @param entity the entity to search.
      * @return a map which contains column name, and field name.
      */
-    public static Map<String, String> getColumnNames(final Class<?> entity) {
+    static Map<String, String> getColumnNames(final Class<?> entity) {
         final Map<String, String> ret = new HashMap<String, String>();
 
         if(entity.getAnnotation(Entity.class) == null) {
@@ -85,7 +85,7 @@ public class EntityUtils {
      * @param prefix a prefix.
      * @return the joined columns.
      */
-    public static String joinColumnsWithComma(final Set<String> columns, final String prefix) {
+    static String joinColumnsWithComma(final Set<String> columns, final String prefix) {
         final StringBuilder sb = new StringBuilder();
 
         if(columns.isEmpty()) {
@@ -115,7 +115,7 @@ public class EntityUtils {
      * @param delimiter the delimiter between the pairs.
      * @return the joined columns.
      */
-    public static String joinColumnsEquals(final Set<String> columns, final String delimiter) {
+    static String joinColumnsEquals(final Set<String> columns, final String delimiter) {
         final StringBuilder sb = new StringBuilder();
 
         if(columns.isEmpty()) {

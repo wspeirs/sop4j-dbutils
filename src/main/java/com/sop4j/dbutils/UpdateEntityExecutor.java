@@ -13,7 +13,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 /**
  * An EntityExecutor that is used to update entities.
  */
-public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<T> {
+public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntityExecutor<T>> {
 
     private final T entityInstance;
 
@@ -24,7 +24,7 @@ public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<T> {
      * @param conn the connection to use.
      */
     UpdateEntityExecutor(final T entityInstance, final Connection conn) {
-        super((Class<T>)entityInstance.getClass(), conn);
+        super(entityInstance.getClass(), conn);
 
         this.entityInstance = entityInstance;
     }

@@ -12,7 +12,7 @@ import com.sop4j.dbutils.handlers.BeanHandler;
 /**
  * An EntityExecutor that is used to read entities.
  */
-public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
+public class ReadEntityExecutor<T> extends AbstractEntityExecutor<ReadEntityExecutor<T>> {
 
     /**
      * Constructor.
@@ -49,6 +49,6 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<T> {
         }
 
         // execute using the BeanHandler
-        return exec.execute(new BeanHandler<T>(entity));
+        return exec.execute(new BeanHandler<T>((Class<T>) entity));
     }
 }

@@ -14,9 +14,9 @@ import javax.persistence.Entity;
 /**
  * An abstract class that makes it easier to build EntityExecutors.
  */
-abstract class AbstractEntityExecutor<T> {
+abstract class AbstractEntityExecutor<T extends AbstractEntityExecutor<T>> {
 
-    protected final Class<T> entity;
+    protected final Class<?> entity;
     protected final Connection conn;
     protected final String tableName;
     protected final Map<String, Object> params = new HashMap<String, Object>();
@@ -24,7 +24,7 @@ abstract class AbstractEntityExecutor<T> {
     /**
      * Constructs the EntityExecutor.
      */
-    public AbstractEntityExecutor(final Class<T> entity, final Connection conn) {
+    public AbstractEntityExecutor(final Class<?> entity, final Connection conn) {
         this.entity = entity;
         this.conn = conn;
 
@@ -49,7 +49,7 @@ abstract class AbstractEntityExecutor<T> {
      * @param value the value to bind.
      * @return this.
      */
-    public AbstractEntityExecutor<T> bind(final String property, final Object value) {
+    public T bind(final String property, final Object value) {
         if(property == null || property.length() == 0) {
             throw new IllegalArgumentException("Property is null or blank string");
         }
@@ -78,6 +78,6 @@ abstract class AbstractEntityExecutor<T> {
             throw new IllegalArgumentException(property + " is not a property of the entity " + entity.getName());
         }
 
-        return this;
+        return (T)this;
     }
 }

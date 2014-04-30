@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * An EntityExecutor that is used to read entities.
  */
-public class DeleteEntityExecutor<T> extends AbstractEntityExecutor<T> {
+public class DeleteEntityExecutor<T> extends AbstractEntityExecutor<DeleteEntityExecutor<T>> {
 
     /**
      * Constructor.
