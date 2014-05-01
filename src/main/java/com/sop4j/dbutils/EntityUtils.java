@@ -41,38 +41,44 @@ public class EntityUtils {
     }
 
     /**
-     * Gets the names of the columns for a given entity.
+     * Gets the names of the columns for a given entity, except those marked as @GeneratedValue.
      * @param entity the entity to search.
      * @return a map which contains column name, and field name.
      */
-    static <T> Map<String, String> getColumnNames(final Class<? extends T> entityClass) {
+    static Map<String, String> getColumnNames(Class<?> entityClass) {
         final Map<String, String> ret = new HashMap<String, String>();
 
         if(entityClass.getAnnotation(Entity.class) == null) {
             throw new IllegalArgumentException(entityClass.getName() + " does not have the Entity annotation");
         }
 
-        for(Field field:entityClass.getDeclaredFields()) {
-            final Column column = field.getAnnotation(Column.class);
-            final GeneratedValue gen = field.getAnnotation(GeneratedValue.class);
+        // we need to walk up the inheritance chain
+        while(entityClass != null) {
+            for(Field field:entityClass.getDeclaredFields()) {
+                final Column column = field.getAnnotation(Column.class);
+                final GeneratedValue gen = field.getAnnotation(GeneratedValue.class);
 
-            // skip anything not annotated or annotated as generated
-            if(column == null || gen != null) {
-                continue;
+                // skip anything not annotated or annotated as generated
+                if(column == null || gen != null) {
+                    continue;
+                }
+
+                String columnName;
+
+                // get the column name or field name
+                if(column.name().isEmpty()) {
+                    columnName = field.getName();
+                } else {
+                    columnName = column.name();
+                }
+
+                if(ret.put(columnName, field.getName()) != null) {
+                    throw new IllegalArgumentException("Entity contains two columns with the same name: " + columnName);
+                }
             }
 
-            String columnName;
-
-            // get the column name or field name
-            if(column.name().isEmpty()) {
-                columnName = field.getName();
-            } else {
-                columnName = column.name();
-            }
-
-            if(ret.put(columnName, field.getName()) != null) {
-                throw new IllegalArgumentException("Entity contains two columns with the same name: " + columnName);
-            }
+            // walk up the inheritance class
+            entityClass = entityClass.getSuperclass();
         }
 
         if(ret.isEmpty()) {
