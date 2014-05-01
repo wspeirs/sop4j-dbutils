@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 /**
  * An abstract class that makes it easier to build EntityExecutors.
  */
-abstract class AbstractEntityExecutor<T extends AbstractEntityExecutor<T>> {
+public abstract class AbstractEntityExecutor<T extends AbstractEntityExecutor<T>> {
 
     protected final Class<?> entity;
     protected final Connection conn;
@@ -24,7 +24,7 @@ abstract class AbstractEntityExecutor<T extends AbstractEntityExecutor<T>> {
     /**
      * Constructs the EntityExecutor.
      */
-    public AbstractEntityExecutor(final Class<?> entity, final Connection conn) {
+    AbstractEntityExecutor(final Class<?> entity, final Connection conn) {
         this.entity = entity;
         this.conn = conn;
 
