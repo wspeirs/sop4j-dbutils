@@ -331,6 +331,13 @@ public class QueryRunner {
      * @throws SQLException if there is a problem inserting the entity.
      */
     public <T> void create(final Class<? extends T> entityClass, final T entity) throws SQLException {
+        internalEntityCreate(entityClass, entity).execute();
+    }
+
+    /*
+     * Internal method that returns the InsertExecutor making it easier to extend.
+     */
+    protected <T> InsertExecutor internalEntityCreate(final Class<? extends T> entityClass, final T entity) throws SQLException {
         final String tableName = EntityUtils.getTableName(entity.getClass());
         final Map<String, String> columns = EntityUtils.getColumnNames(entityClass);
 
@@ -368,8 +375,7 @@ public class QueryRunner {
             }
         }
 
-        // execute the insert
-        exec.execute();
+        return exec;
     }
 
     /**
