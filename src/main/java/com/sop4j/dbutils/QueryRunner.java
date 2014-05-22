@@ -18,8 +18,11 @@ package com.sop4j.dbutils;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -331,13 +334,15 @@ public class QueryRunner {
      * @throws SQLException if there is a problem inserting the entity.
      */
     public <T> void create(final Class<? extends T> entityClass, final T entity) throws SQLException {
-        internalEntityCreate(entityClass, entity).execute();
+        internalEntityCreate(entityClass, entity, new HashSet<String>()).execute();
     }
 
     /*
      * Internal method that returns the InsertExecutor making it easier to extend.
      */
-    protected <T> InsertExecutor internalEntityCreate(final Class<? extends T> entityClass, final T entity) throws SQLException {
+    protected <T> InsertExecutor internalEntityCreate(final Class<? extends T> entityClass,
+                                                      final T entity,
+                                                      final Set<String> excludeColumns) throws SQLException {
         final String tableName = EntityUtils.getTableName(entity.getClass());
         final Map<String, String> columns = EntityUtils.getColumnNames(entityClass);
 
@@ -357,6 +362,11 @@ public class QueryRunner {
         final InsertExecutor exec = new InsertExecutor(this.prepareConnection(), sb.toString(), true);
 
         for(String column:columns.keySet()) {
+            // don't bind the exclude columns
+            if(excludeColumns.contains(column)) {
+                continue;
+            }
+
             try {
                 // bind all of the values
                 final Object value = PropertyUtils.getSimpleProperty(entity, columns.get(column));

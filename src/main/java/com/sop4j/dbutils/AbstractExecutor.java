@@ -151,7 +151,7 @@ abstract class AbstractExecutor<T extends AbstractExecutor<T>> {
         final List<Integer> pos = paramPosMap.get(name);
 
         if (pos == null) {
-            throw new SQLException(name + " is not found in the SQL statement");
+            throw new SQLException(name + " is not found in the SQL statement: " + getSql());
         }
 
         // make sure it isn't already bound
