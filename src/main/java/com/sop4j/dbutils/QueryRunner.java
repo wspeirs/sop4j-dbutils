@@ -18,6 +18,7 @@ package com.sop4j.dbutils;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -399,6 +400,17 @@ public class QueryRunner {
     }
 
     /**
+     * Constructs an entity ReadEntityExecutor used to read entities that excludes columns during binding.
+     * @param entity an entity marked with the {@link Entity} annotation.
+     * @param excludeColumns a collection of columns to exclude.
+     * @return a {@link ReadEntityExecutor} used to read entities.
+     * @throws SQLException If there are database or parameter errors.
+     */
+    public <T> ReadEntityExecutor<T> read(final Class<T> entity, final Collection<String> excludeColumns) throws SQLException {
+        return new ReadEntityExecutor<T>(entity, this.prepareConnection(), new HashSet<String>(excludeColumns));
+    }
+
+    /**
      * Constructs an {@link UpdateEntityExecutor} used to update entities.
      * @param entity an entity marked with the {@link Entity} annotation.
      * @return a {@link UpdateEntityExecutor} used to update entities.
@@ -409,6 +421,17 @@ public class QueryRunner {
     }
 
     /**
+     * Constructs an {@link UpdateEntityExecutor} used to update entities that excludes columns during binding.
+     * @param entity an entity marked with the {@link Entity} annotation.
+     * @param excludeColumns a collection of columns to exclude.
+     * @return a {@link UpdateEntityExecutor} used to update entities.
+     * @throws SQLException If there are database or parameter errors.
+     */
+    public <T> UpdateEntityExecutor<T> update(final T entity, final Collection<String> excludeColumns) throws SQLException {
+        return new UpdateEntityExecutor<T>(entity, this.prepareConnection(), new HashSet<String>(excludeColumns));
+    }
+
+    /**
      * Constructs an {@link DeleteEntityExecutor} used to delete entities.
      * @param entity an entity marked with the {@link Entity} annotation.
      * @return a {@link DeleteEntityExecutor} used to delete entities.
@@ -416,5 +439,16 @@ public class QueryRunner {
      */
     public <T> DeleteEntityExecutor<T> delete(final Class<T> entity) throws SQLException {
         return new DeleteEntityExecutor<T>(entity, this.prepareConnection());
+    }
+
+    /**
+     * Constructs an {@link DeleteEntityExecutor} used to delete entities that excludes columns during binding.
+     * @param entity an entity marked with the {@link Entity} annotation.
+     * @param excludeColumns a collection of columns to exclude.
+     * @return a {@link DeleteEntityExecutor} used to delete entities.
+     * @throws SQLException If there are database or parameter errors.
+     */
+    public <T> DeleteEntityExecutor<T> delete(final Class<T> entity, final Collection<String> excludeColumns) throws SQLException {
+        return new DeleteEntityExecutor<T>(entity, this.prepareConnection(), new HashSet<String>(excludeColumns));
     }
 }

@@ -6,7 +6,9 @@ package com.sop4j.dbutils;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -19,6 +21,7 @@ public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntity
     private static final Logger LOG = LoggerFactory.getLogger(UpdateEntityExecutor.class);
 
     private final T entityInstance;
+    private final Set<String> excludeColumns;
 
     /**
      * Constructor.
@@ -27,9 +30,21 @@ public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntity
      * @param conn the connection to use.
      */
     UpdateEntityExecutor(final T entityInstance, final Connection conn) {
+        this(entityInstance, conn, new HashSet<String>());
+    }
+
+    /**
+     * Constructor that takes a list of columns to exclude during the bind.
+     *
+     * @param entityInstance the entity instance to update.
+     * @param conn the connection to use.
+     * @param excludeColumns the columns to exclude during the bind.
+     */
+    UpdateEntityExecutor(final T entityInstance, final Connection conn, final Set<String> excludeColumns) {
         super(entityInstance.getClass(), conn);
 
         this.entityInstance = entityInstance;
+        this.excludeColumns = excludeColumns;
     }
 
     /**
@@ -60,6 +75,11 @@ public class UpdateEntityExecutor<T> extends AbstractEntityExecutor<UpdateEntity
 
         // bind all the column values
         for(String column:columns.keySet()) {
+            // skip anything in the exclude set
+            if(excludeColumns.contains(column)) {
+                continue;
+            }
+
             try {
                 // bind all of the values
                 final Object value = PropertyUtils.getSimpleProperty(entityInstance, columns.get(column));

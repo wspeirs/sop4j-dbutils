@@ -5,7 +5,9 @@ package com.sop4j.dbutils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,8 @@ import com.sop4j.dbutils.handlers.BeanHandler;
 public class ReadEntityExecutor<T> extends AbstractEntityExecutor<ReadEntityExecutor<T>> {
     private static final Logger LOG = LoggerFactory.getLogger(ReadEntityExecutor.class);
 
+    private final Set<String> excludeColumns;
+
     /**
      * Constructor.
      *
@@ -25,7 +29,19 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<ReadEntityExec
      * @param conn the connection to use.
      */
     ReadEntityExecutor(final Class<T> entity, final Connection conn) {
+        this(entity, conn, new HashSet<String>());
+    }
+
+    /**
+     * Constructor that excludes columns during binding.
+     *
+     * @param entity the entity to read.
+     * @param conn the connection to use.
+     */
+    ReadEntityExecutor(final Class<T> entity, final Connection conn, final Set<String> excludeColumns) {
         super(entity, conn);
+
+        this.excludeColumns = excludeColumns;
     }
 
     /**
@@ -51,6 +67,10 @@ public class ReadEntityExecutor<T> extends AbstractEntityExecutor<ReadEntityExec
 
         // go through and bind all the params
         for(Map.Entry<String, Object> entity:params.entrySet()) {
+            if(excludeColumns.contains(entity.getKey())) {
+                continue;
+            }
+
             exec.bind(entity.getKey(), entity.getValue());
         }
 
