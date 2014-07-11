@@ -244,7 +244,8 @@ public class BeanProcessor {
      * @param value The value to pass into the setter.
      * @throws SQLException if an error occurs setting the property.
      */
-    private void callSetter(Object target, PropertyDescriptor prop, Object value)
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void callSetter(Object target, PropertyDescriptor prop, Object value)
             throws SQLException {
 
         Method setter = prop.getWriteMethod();
@@ -273,10 +274,18 @@ public class BeanProcessor {
             if (this.isCompatibleType(value, params[0])) {
                 setter.invoke(target, new Object[]{value});
             } else {
-              throw new SQLException(
-                  "Cannot set " + prop.getName() + ": incompatible types, cannot convert "
-                  + value.getClass().getName() + " to " + params[0].getName());
-                  // value cannot be null here because isCompatibleType allows null
+            	
+            	try {  
+
+                    if(value != null)  
+                    {  
+						Class cz = Class.forName(params[0].getName());  
+                        setter.invoke(target, Enum.valueOf(cz, (String) value));  
+                    }  
+                } catch (ClassNotFoundException e) {  
+                    throw new SQLException("Cannot set " + prop.getName() + ": incompatible types.");  
+                }  
+              
             }
 
         } catch (IllegalArgumentException e) {
