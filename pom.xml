@@ -18,7 +18,7 @@ limitations under the License.
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sop4j</groupId>
   <artifactId>dbutils</artifactId>
-  <version>2.2-SNAPSHOT</version>
+  <version>2.2</version>
   <name>SOP4J DbUtils</name>
   <packaging>jar</packaging>
   <inceptionYear>2013</inceptionYear>
@@ -36,7 +36,7 @@ limitations under the License.
     <connection>scm:git:git://github.com/wspeirs/sop4j-dbutils.git</connection>
     <developerConnection>scm:git:git@github.com:wspeirs/sop4j-dbutils.git</developerConnection>
     <url>https://github.com/wspeirs/sop4j-dbutils</url>
-    <tag>HEAD</tag>
+    <tag>dbutils-2.2</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
