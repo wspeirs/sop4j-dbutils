@@ -42,6 +42,14 @@ The <action> type attribute can be add,update,fix,remove.
     <title>Release Notes</title>
   </properties>
   <body>
+    <release version="2.2" date="2014-07-15" description="Adds a bunch of ORM type classes">
+      <action type="update" issue="2" due-to-email="yinlei212@gmail.com" dev="wspeirs">
+        Added support for Enums.
+      </action>
+      <action type="add" dev="wspeirs">
+        Added a bunch of ORM type classes.
+      </action>
+    </release>
     <release version="2.1" date="2014-02-05" description="Fixes to the BatchExecutor">
     </release>
     <release version="2.0" date="2014-01-07" description="A fork of Apache commons-dbutils">

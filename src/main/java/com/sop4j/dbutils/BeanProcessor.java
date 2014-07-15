@@ -247,13 +247,14 @@ public class BeanProcessor {
     private void callSetter(Object target, PropertyDescriptor prop, Object value)
             throws SQLException {
 
-        Method setter = prop.getWriteMethod();
+        final Method setter = prop.getWriteMethod();
 
         if (setter == null) {
             return;
         }
 
-        Class<?>[] params = setter.getParameterTypes();
+        final Class<?>[] params = setter.getParameterTypes();
+
         try {
             // convert types for some popular ones
             if (value instanceof java.util.Date) {
@@ -266,6 +267,18 @@ public class BeanProcessor {
                 } else
                 if ("java.sql.Timestamp".equals(targetType)) {
                     value = new java.sql.Timestamp(((java.util.Date) value).getTime());
+                }
+            }
+
+            // see if we can make it work with an enum
+            // Issue #2: https://github.com/wspeirs/sop4j-dbutils/pull/2
+            if(params[0].isEnum() && value != null) {
+                try {
+                    final Class cz = Class.forName(params[0].getName());
+                    setter.invoke(target, Enum.valueOf(cz, (String) value));
+                } catch(final ClassNotFoundException e) {
+                    throw new SQLException("Attempted to set an Enum, but class "
+                            + params[0].getName() + " was not found: " + e.getMessage());
                 }
             }
 
