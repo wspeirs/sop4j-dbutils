@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 
@@ -45,7 +46,17 @@ public class EntityUtils {
      * @param entity the entity to search.
      * @return a map which contains column name, and field name.
      */
-    static Map<String, String> getColumnNames(Class<?> entityClass) {
+    static Map<String, String> getColumns(Class<?> entityClass) {
+        return getColumns(entityClass, false);
+    }
+
+    /**
+     * Gets the names of the columns for a given entity, except those marked as @GeneratedValue.
+     * @param entity the entity to search.
+     * @param excludeIds excludes columns marked with @Id when true
+     * @return a map which contains column name, and field name.
+     */
+    static Map<String, String> getColumns(Class<?> entityClass, boolean excludeIds) {
         final Map<String, String> ret = new HashMap<String, String>();
 
         if(entityClass.getAnnotation(Entity.class) == null) {
@@ -56,10 +67,62 @@ public class EntityUtils {
         while(entityClass != null) {
             for(Field field:entityClass.getDeclaredFields()) {
                 final Column column = field.getAnnotation(Column.class);
+                final Id id = field.getAnnotation(Id.class);
                 final GeneratedValue gen = field.getAnnotation(GeneratedValue.class);
 
-                // skip anything not annotated or annotated as generated
-                if(column == null || gen != null) {
+                // if we only want IDs, and this isn't an @Id, then skip
+                if(excludeIds && id != null) {
+                    continue;
+                // if we want all columns, then must be marked as a column and not auto-generated
+                } else if(column == null || gen != null) {
+                    continue;
+                }
+
+                String columnName;
+
+                // get the column name or field name
+                if(column.name().isEmpty()) {
+                    columnName = field.getName();
+                } else {
+                    columnName = column.name();
+                }
+
+                if(ret.put(columnName, field.getName()) != null) {
+                    throw new IllegalArgumentException("Entity contains two columns with the same name: " + columnName);
+                }
+            }
+
+            // walk up the inheritance class
+            entityClass = entityClass.getSuperclass();
+        }
+
+        if(ret.isEmpty()) {
+            throw new IllegalArgumentException("Entity does not contain any columns");
+        }
+
+        return ret;
+    }
+
+    /**
+     * Gets the names of the columns that are marked with @Id.
+     * @param entity the entity to search.
+     * @return a map which contains column name, and field name.
+     */
+    static Map<String, String> getIdColumns(Class<?> entityClass) {
+        final Map<String, String> ret = new HashMap<String, String>();
+
+        if(entityClass.getAnnotation(Entity.class) == null) {
+            throw new IllegalArgumentException(entityClass.getName() + " does not have the Entity annotation");
+        }
+
+        // we need to walk up the inheritance chain
+        while(entityClass != null) {
+            for(Field field:entityClass.getDeclaredFields()) {
+                final Column column = field.getAnnotation(Column.class);
+                final Id id = field.getAnnotation(Id.class);
+
+                // if we only want IDs, and this isn't an @Id, then skip
+                if(column == null || id == null) {
                     continue;
                 }
 
