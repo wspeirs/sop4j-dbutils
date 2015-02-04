@@ -1,6 +1,7 @@
 package com.sop4j.dbutils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 
 public class EntityUtils {
@@ -38,6 +41,32 @@ public class EntityUtils {
             return table.name();
         } else {
             return entity.getSimpleName();
+        }
+    }
+
+    /**
+     * Given an entity, gets the @Id of the entity, assuming only one ID column.
+     * @param entityClass the type of the entity.
+     * @param entity the instance of the entity.
+     * @return the value of the ID.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getId(final Class<T> entityClass, T entity) {
+        Map<String, String> idColumns = getIdColumns(entityClass);
+
+        if(idColumns.size() != 1) {
+            throw new IllegalArgumentException("Cannot get ID for this entity, wrong number of IDs: " + idColumns.size());
+        }
+
+        try {
+            final String column = idColumns.keySet().toArray(new String[0])[0];
+            return (T) PropertyUtils.getSimpleProperty(entity, idColumns.get(column));
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException(e);
+        } catch (InvocationTargetException e) {
+            throw new IllegalArgumentException(e);
+        } catch (NoSuchMethodException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 

@@ -522,43 +522,6 @@ public class QueryRunner {
     }
 
     /**
-     * Binds values to an executor.
-     * @param exec
-     * @param columns
-     * @param entity
-     * @param excludes
-     * @throws SQLException
-     */
-    private <T> void bindColumnValues(final AbstractExecutor<?> exec,
-                                      final Map<String, String> columns,
-                                      final T entity,
-                                      final Collection<String> excludes) throws SQLException {
-        for(String column:columns.keySet()) {
-            // skip anything in the exclude set
-            if(excludes.contains(column)) {
-                continue;
-            }
-
-            try {
-                // bind all of the values
-                final Object value = PropertyUtils.getSimpleProperty(entity, columns.get(column));
-
-                if(value == null) {
-                    exec.bindNull(column);
-                } else {
-                    exec.bind(column, value);
-                }
-            } catch (final IllegalAccessException e) {
-                throw new SQLException(e);
-            } catch (final InvocationTargetException e) {
-                throw new SQLException(e);
-            } catch (final NoSuchMethodException e) {
-                throw new SQLException(e);
-            }
-        }
-    }
-
-    /**
      * Constructs an {@link DeleteEntityExecutor} used to delete entities.
      * @param entity an entity marked with the {@link Entity} annotation.
      * @return a {@link DeleteEntityExecutor} used to delete entities.
@@ -596,6 +559,43 @@ public class QueryRunner {
 
         // execute using the BeanHandler
         return exec.execute();
+    }
+
+    /**
+     * Binds values to an executor.
+     * @param exec
+     * @param columns
+     * @param entity
+     * @param excludes
+     * @throws SQLException
+     */
+    private <T> void bindColumnValues(final AbstractExecutor<?> exec,
+                                      final Map<String, String> columns,
+                                      final T entity,
+                                      final Collection<String> excludes) throws SQLException {
+        for(String column:columns.keySet()) {
+            // skip anything in the exclude set
+            if(excludes.contains(column)) {
+                continue;
+            }
+
+            try {
+                // bind all of the values
+                final Object value = PropertyUtils.getSimpleProperty(entity, columns.get(column));
+
+                if(value == null) {
+                    exec.bindNull(column);
+                } else {
+                    exec.bind(column, value);
+                }
+            } catch (final IllegalAccessException e) {
+                throw new SQLException(e);
+            } catch (final InvocationTargetException e) {
+                throw new SQLException(e);
+            } catch (final NoSuchMethodException e) {
+                throw new SQLException(e);
+            }
+        }
     }
 
 }
