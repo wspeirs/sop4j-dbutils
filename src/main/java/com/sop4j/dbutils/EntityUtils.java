@@ -51,7 +51,7 @@ public class EntityUtils {
      * @return the value of the ID.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getId(final Class<T> entityClass, T entity) {
+    public static <T, I> I getId(final Class<T> entityClass, T entity) {
         Map<String, String> idColumns = getIdColumns(entityClass);
 
         if(idColumns.size() != 1) {
@@ -60,7 +60,7 @@ public class EntityUtils {
 
         try {
             final String column = idColumns.keySet().toArray(new String[0])[0];
-            return (T) PropertyUtils.getSimpleProperty(entity, idColumns.get(column));
+            return (I) PropertyUtils.getSimpleProperty(entity, idColumns.get(column));
         } catch (IllegalAccessException e) {
             throw new IllegalArgumentException(e);
         } catch (InvocationTargetException e) {
@@ -137,7 +137,7 @@ public class EntityUtils {
      * @param entity the entity to search.
      * @return a map which contains column name, and field name.
      */
-    static Map<String, String> getIdColumns(Class<?> entityClass) {
+    public static Map<String, String> getIdColumns(Class<?> entityClass) {
         final Map<String, String> ret = new HashMap<String, String>();
 
         if(entityClass.getAnnotation(Entity.class) == null) {
