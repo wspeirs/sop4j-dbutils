@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 
 import org.junit.Before;
@@ -45,6 +46,7 @@ public class AbstractExecutorTest {
         MockitoAnnotations.initMocks(this);
 
         when(conn.prepareStatement(any(String.class))).thenReturn(stmt);
+        when(conn.prepareStatement(any(String.class), any(Integer.class))).thenReturn(stmt);
     }
 
     @SuppressWarnings("rawtypes")
@@ -56,7 +58,7 @@ public class AbstractExecutorTest {
     public void testGoodSql() throws SQLException {
         createExecutor("select * from blah :first = first and :last=last and phone=:phone");
 
-        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last and phone=?");
+        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last and phone=?", Statement.NO_GENERATED_KEYS);
 
         executor.bind("first", "first_name")
                 .bind(":last", "last_name")
@@ -74,7 +76,7 @@ public class AbstractExecutorTest {
     public void testNoParamsSql() throws SQLException {
         createExecutor("select * from blah");
 
-        verify(conn, times(1)).prepareStatement("select * from blah");
+        verify(conn, times(1)).prepareStatement("select * from blah", Statement.NO_GENERATED_KEYS);
         verify(stmt, times(0)).setObject(any(Integer.class), any(Object.class));
 
         executor.throwIfUnmappedParams();
@@ -84,7 +86,7 @@ public class AbstractExecutorTest {
     public void testMissingParamSql() throws SQLException {
         createExecutor("select * from blah :first = first and :last=last");
 
-        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last");
+        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last", Statement.NO_GENERATED_KEYS);
 
         executor.bind("first", "first_name")
                 .bind(":last", "last_name")
@@ -99,7 +101,7 @@ public class AbstractExecutorTest {
     public void testDoubleBind() throws SQLException {
         createExecutor("select * from blah :first = first and :last=last");
 
-        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last");
+        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last", Statement.NO_GENERATED_KEYS);
 
         executor.bind("first", "first_name")
                 .bind(":last", "last_name")
@@ -113,7 +115,7 @@ public class AbstractExecutorTest {
     public void testNullBind() throws SQLException {
         createExecutor("select * from blah :first = first and :last=last");
 
-        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last");
+        verify(conn, times(1)).prepareStatement("select * from blah ? = first and ?=last", Statement.NO_GENERATED_KEYS);
 
         executor.bindNull("first")
                 .bindNull(":last", Types.NULL);

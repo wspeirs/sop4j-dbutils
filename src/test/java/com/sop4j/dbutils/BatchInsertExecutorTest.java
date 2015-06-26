@@ -17,6 +17,7 @@ package com.sop4j.dbutils;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +47,7 @@ public class BatchInsertExecutorTest {
     public void setup() throws SQLException {
         MockitoAnnotations.initMocks(this);
 
-        when(conn.prepareStatement(any(String.class))).thenReturn(stmt);
+        when(conn.prepareStatement(any(String.class), eq(Statement.RETURN_GENERATED_KEYS))).thenReturn(stmt);
         when(stmt.getGeneratedKeys()).thenReturn(resultSet);
         when(handler.handle(any(ResultSet.class))).thenReturn(new Object());
     }

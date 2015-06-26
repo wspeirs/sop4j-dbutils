@@ -43,7 +43,7 @@ public class UpdateExecutorTest {
     public void setup() throws SQLException {
         MockitoAnnotations.initMocks(this);
 
-        when(conn.prepareStatement(any(String.class))).thenReturn(stmt);
+        when(conn.prepareStatement(any(String.class), any(Integer.class))).thenReturn(stmt);
         when(stmt.executeUpdate()).thenReturn(20);
     }
 

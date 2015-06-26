@@ -46,6 +46,7 @@ public class QueryExecutorTest {
         MockitoAnnotations.initMocks(this);
 
         when(conn.prepareStatement(any(String.class))).thenReturn(stmt);
+        when(conn.prepareStatement(any(String.class), any(Integer.class))).thenReturn(stmt);
         when(stmt.executeQuery()).thenReturn(resultSet);
         when(handler.handle(any(ResultSet.class))).thenReturn(new Object());
     }

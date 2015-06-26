@@ -42,7 +42,7 @@ public class BatchExecutorTest {
     public void setup() throws SQLException {
         MockitoAnnotations.initMocks(this);
 
-        when(conn.prepareStatement(any(String.class))).thenReturn(stmt);
+        when(conn.prepareStatement(any(String.class), any(Integer.class))).thenReturn(stmt);
         when(stmt.executeBatch()).thenReturn(new int[] { 2, 3, 4 });
     }
 
