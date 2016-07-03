@@ -39,7 +39,8 @@ public class BaseTestCase extends TestCase {
             "nullObjectTest",
             "nullPrimitiveTest",
             "notDate",
-            "columnProcessorDoubleTest" };
+            "columnProcessorDoubleTest",
+            "enumTest"};
 
     /**
      * The number of columns in the MockResultSet.
@@ -60,7 +61,8 @@ public class BaseTestCase extends TestCase {
             null,
             null,
             new Date(),
-            BigInteger.valueOf(13)};
+            BigInteger.valueOf(13),
+            "ENUM_ZERO"};
 
     private static final Object[] row2 =
         new Object[] {
@@ -73,7 +75,8 @@ public class BaseTestCase extends TestCase {
             null,
             null,
             new Date(),
-            BigInteger.valueOf(13)};
+            BigInteger.valueOf(13),
+            "ENUM_ONE"};
 
     private static final Object[][] rows = new Object[][] { row1, row2 };
 
