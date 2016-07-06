@@ -280,10 +280,8 @@ public class BeanProcessor {
                     throw new SQLException("Attempted to set an Enum, but class "
                             + params[0].getName() + " was not found: " + e.getMessage());
                 }
-            }
-
-            // Don't call setter if the value object isn't the right type
-            if (this.isCompatibleType(value, params[0])) {
+            } else if (this.isCompatibleType(value, params[0])) {
+                // Don't call setter if the value object isn't the right type
                 setter.invoke(target, new Object[]{value});
             } else {
               throw new SQLException(
